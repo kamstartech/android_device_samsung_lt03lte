@@ -59,6 +59,10 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
+# Vendor (system-as-vendor: no dedicated vendor partition)
+TARGET_COPY_OUT_VENDOR := system/vendor
+PRODUCT_USE_DYNAMIC_PARTITIONS := false
+
 # Init
 $(call soong_config_set,libinit,vendor_init_lib,libinit_msm8974)
 TARGET_LIBINIT_MSM8974_DEFINES_FILE := device/samsung/lt03lte/init/init_lt03lte.cpp

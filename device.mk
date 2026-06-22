@@ -141,5 +141,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_SYSTEM_PROPERTIES += \
     lockscreen.rot_override=true
 
+# Shipping API level (original Android 4.4 device)
+PRODUCT_SHIPPING_API_LEVEL := 19
+
+# Skip kernel requirement checks — 3.4 kernel predates GKI
+PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
+
 # Common msm8974
 $(call inherit-product, device/samsung/msm8974-common/msm8974.mk)
