@@ -20,7 +20,7 @@ include device/samsung/msm8974-common/BoardConfigCommon.mk
 LOCAL_PATH := device/samsung/lt03lte
 
 # Allow modules with missing deps (VTS/VNDK test modules absent in this config)
-BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
+ALLOW_MISSING_DEPENDENCIES := true
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := lt03lte,lt03ltexx
