@@ -1,5 +1,6 @@
 /*
    Copyright (c) 2013, The Linux Foundation. All rights reserved.
+   Copyright (c) 2017-2024, The LineageOS Project. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
@@ -27,84 +28,68 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
+#include <string>
 
-#include <cutils/properties.h>
-#include "vendor_init.h"
-#include "log.h"
-#include "util.h"
+#include <android-base/logging.h>
+#include <android-base/properties.h>
 
 #include "init_msm8974.h"
 
-#define ISMATCH(a, b) (!strncmp((a), (b), PROP_VALUE_MAX))
+void vendor_load_properties() {
+    std::string bootloader = android::base::GetProperty("ro.bootloader", "");
 
-void init_target_properties()
-{
-    char platform[PROP_VALUE_MAX];
-    char bootloader[PROP_VALUE_MAX];
-    char device[PROP_VALUE_MAX];
-    char devicename[PROP_VALUE_MAX];
-    int rc;
-
-    rc = property_get("ro.board.platform", platform, NULL);
-    if (!rc || !ISMATCH(platform, ANDROID_TARGET))
-        return;
-
-    property_get("ro.bootloader", bootloader, NULL);
-
-    if (strstr(bootloader, "P605M")) {
+    if (bootloader.find("P605M") != std::string::npos) {
         /* lt03ltecmo */
-        property_set("ro.build.fingerprint", "samsung/lt03ltecmo/lt03lte:4.4.2/KOT49H/P605MUBUCNH1:user/release-keys");
-        property_set("ro.build.description", "lt03lteusc-user 4.4.2 KOT49H P605MUBUCNH1 release-keys");
-        property_set("ro.product.model", "SM-P605M");
-        property_set("ro.product.device", "lt03ltecmo");
-        property_set("ro.telephony.default_network", "9");
-        property_set("ro.telephony.ril.v3", "newDialCode");
-        property_set("telephony.lteOnGsmDevice", "1");
-    } else if (strstr(bootloader, "P605S")) {
-        /* lt03ltesks */
-        property_set("ro.build.fingerprint", "samsung/lt03ltesks/lt03lte:5.1.1/LMY47X/P605XXU1EOI5:user/release-keys");
-        property_set("ro.build.description", "lt03lteusc-user 5.1.1 LMY47X P605XXU1EOI5 release-keys");
-        property_set("ro.product.model", "SM-P605S");
-        property_set("ro.product.device", "lt03ltesks");
-        property_set("ro.telephony.default_network", "9");
-        property_set("ro.telephony.ril.v3", "newDialCode");
-        property_set("telephony.lteOnGsmDevice", "1");
-    } else if (strstr(bootloader, "P605V")) {
-        /* lt03ltevzw */
-        property_set("ro.build.fingerprint", "samsung/lt03ltevzw/lt03lte:5.1.1/LMY47X/P605VVRUDOH2:user/release-keys");
-        property_set("ro.build.description", "lt03ltevzw-user 5.1.1 LMY47X P605VVRUDOH2 release-keys");
-        property_set("ro.product.model", "SM-P605V");
-        property_set("ro.product.device", "lt03ltevzw");
-        property_set("ro.cdma.home.operator.alpha", "Verizon");
-        property_set("ro.cdma.home.operator.numeric", "311480");
-        property_set("ro.telephony.default_cdma_sub", "0"); // 0: RUIM/SIM  1: NV
-        property_set("ro.telephony.default_network", "10");
-        property_set("ro.telephony.ril.v3", "newDriverCallU,newDialCode");
-        property_set("telephony.lteOnCdmaDevice", "1");
+        property_override("ro.build.fingerprint",
+            "samsung/lt03ltecmo/lt03lte:4.4.2/KOT49H/P605MUBUCNH1:user/release-keys");
+        property_override("ro.build.description",
+            "lt03ltecmo-user 4.4.2 KOT49H P605MUBUCNH1 release-keys");
+        set_ro_product_prop("model",  "SM-P605M");
+        set_ro_product_prop("device", "lt03ltecmo");
+        gsm_properties("9", "gsm");
 
-    } else if (strstr(bootloader, "P607T")) {
+    } else if (bootloader.find("P605S") != std::string::npos) {
+        /* lt03ltesks */
+        property_override("ro.build.fingerprint",
+            "samsung/lt03ltesks/lt03lte:5.1.1/LMY47X/P605XXU1EOI5:user/release-keys");
+        property_override("ro.build.description",
+            "lt03ltesks-user 5.1.1 LMY47X P605XXU1EOI5 release-keys");
+        set_ro_product_prop("model",  "SM-P605S");
+        set_ro_product_prop("device", "lt03ltesks");
+        gsm_properties("9", "gsm");
+
+    } else if (bootloader.find("P605V") != std::string::npos) {
+        /* lt03ltevzw */
+        property_override("ro.build.fingerprint",
+            "samsung/lt03ltevzw/lt03lte:5.1.1/LMY47X/P605VVRUDOH2:user/release-keys");
+        property_override("ro.build.description",
+            "lt03ltevzw-user 5.1.1 LMY47X P605VVRUDOH2 release-keys");
+        set_ro_product_prop("model",  "SM-P605V");
+        set_ro_product_prop("device", "lt03ltevzw");
+        cdma_properties("Verizon", "311480", "0", "10", "cdma");
+
+    } else if (bootloader.find("P607T") != std::string::npos) {
         /* lt03ltetmo */
-        property_set("ro.build.fingerprint", "samsung/lt03ltetmo/lt03ltetmo:5.1.1/LMY47X/P607TUVUBOI2:user/release-keys");
-        property_set("ro.build.description", "lt03ltetmo-user 5.1.1 LMY47X P607TUVUBOI2 release-keys");
-        property_set("ro.product.model", "SM-P607T");
-        property_set("ro.product.device", "lt03ltetmo");
-        property_set("ro.telephony.default_network", "9");
-        property_set("ro.telephony.ril.v3", "newDialCode");
-        property_set("telephony.lteOnGsmDevice", "1");
+        property_override("ro.build.fingerprint",
+            "samsung/lt03ltetmo/lt03ltetmo:5.1.1/LMY47X/P607TUVUBOI2:user/release-keys");
+        property_override("ro.build.description",
+            "lt03ltetmo-user 5.1.1 LMY47X P607TUVUBOI2 release-keys");
+        set_ro_product_prop("model",  "SM-P607T");
+        set_ro_product_prop("device", "lt03ltetmo");
+        gsm_properties("9", "gsm");
+
     } else {
-        /* lt03ltexx */
-        property_set("ro.build.fingerprint", "samsung/lt03ltexx/lt03lte:4.4.2/KOT49H/P605XXUDOB1:user/release-keys");
-        property_set("ro.build.description", "lt03ltexx-user 4.4.2 KOT49H P605XXUDOB1 release-keys");
-        property_set("ro.product.model", "SM-P605");
-        property_set("ro.product.device", "lt03ltexx");
-        property_set("ro.telephony.default_network", "9");
-        property_set("ro.telephony.ril.v3", "newDialCode");
-        property_set("telephony.lteOnGsmDevice", "1");
+        /* lt03ltexx — default */
+        property_override("ro.build.fingerprint",
+            "samsung/lt03ltexx/lt03lte:5.1.1/LMY47X/lt03ltexxu1bpd1:user/release-keys");
+        property_override("ro.build.description",
+            "lt03ltexx-user 5.1.1 LMY47X lt03ltexxu1bpd1 release-keys");
+        set_ro_product_prop("model",  "SM-P605");
+        set_ro_product_prop("device", "lt03ltexx");
+        gsm_properties("9", "gsm");
     }
-    property_get("ro.product.device", device, NULL);
-    strlcpy(devicename, device, sizeof(devicename));
-    ERROR("Found bootloader id %s setting build properties for %s device\n", bootloader, devicename);
+
+    std::string device = android::base::GetProperty("ro.product.device", "");
+    LOG(INFO) << "Found bootloader id " << bootloader
+              << " setting build properties for " << device;
 }
