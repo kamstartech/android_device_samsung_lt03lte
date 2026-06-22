@@ -1,5 +1,5 @@
 #
-# Copyright 2016 The CyanogenMod Project
+# Copyright (C) 2016 The CyanogenMod Project
 # Copyright (C) 2017-2024 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +13,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-# Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+$(call inherit-product, device/samsung/lt03lte/full_lt03lte.mk)
 
-# Inherit from lt03lte device
-$(call inherit-product, device/samsung/lt03lte/device.mk)
+# Inherit some common Lineage stuff.
+$(call inherit-product, vendor/lineage/config/common_full_tablet_wif.mk)
 
-# Set those variables here to overwrite the inherited values.
+BOARD_VENDOR := samsung
 PRODUCT_DEVICE := lt03lte
-PRODUCT_NAME := full_lt03lte
+PRODUCT_NAME := lineage_lt03lte
 PRODUCT_BRAND := samsung
 PRODUCT_MODEL := Samsung Galaxy Tab Pro 10.1 LTE
 PRODUCT_MANUFACTURER := samsung
+TARGET_VENDOR := samsung
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRIVATE_BUILD_DESC="lt03ltexx-user 5.1.1 LMY47X lt03ltexxu1bpd1 release-keys"
+
+BUILD_FINGERPRINT := samsung/lt03ltexx/lt03lte:5.1.1/LMY47X/lt03ltexxu1bpd1:user/release-keys
