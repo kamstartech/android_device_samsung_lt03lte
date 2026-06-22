@@ -65,6 +65,9 @@ TARGET_USERIMAGES_USE_F2FS := true
 # Vendor (system-as-vendor: no dedicated vendor partition)
 TARGET_COPY_OUT_VENDOR := system/vendor
 
+# GPS (device has its own stack; suppresses msm8974-common duplicate)
+TARGET_HAS_OWN_GPS_STACK := true
+
 # Init
 $(call soong_config_set,libinit,vendor_init_lib,libinit_msm8974)
 TARGET_UNIFIED_DEVICE := true
