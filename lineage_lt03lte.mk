@@ -17,7 +17,7 @@
 $(call inherit-product, device/samsung/lt03lte/full_lt03lte.mk)
 
 # Inherit some common Lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_tablet_wif.mk)
+$(call inherit-product, vendor/lineage/config/common_full_tablet.mk)
 
 BOARD_VENDOR := samsung
 PRODUCT_DEVICE := lt03lte
