@@ -61,7 +61,6 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 # Vendor (system-as-vendor: no dedicated vendor partition)
 TARGET_COPY_OUT_VENDOR := system/vendor
-PRODUCT_USE_DYNAMIC_PARTITIONS := false
 
 # Init
 $(call soong_config_set,libinit,vendor_init_lib,libinit_msm8974)

@@ -144,6 +144,9 @@ PRODUCT_SYSTEM_PROPERTIES += \
 # Shipping API level (original Android 4.4 device)
 PRODUCT_SHIPPING_API_LEVEL := 19
 
+# No dynamic/super partition on this device
+PRODUCT_USE_DYNAMIC_PARTITIONS := false
+
 # Skip kernel requirement checks — 3.4 kernel predates GKI
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 
