@@ -17,5 +17,10 @@
 LOCAL_PATH := $(call my-dir)
 
 ifeq ($(TARGET_DEVICE),lt03lte)
-include $(call all-subdir-makefiles,$(LOCAL_PATH))
+# GPS source tree excluded — all GPS libs are provided as vendor blobs
+# (libgps.utils, libloc_core, libloc_eng, libloc_api_v02, gps.default)
+include $(call all-makefiles-under,$(LOCAL_PATH)/ril)
+include $(call all-makefiles-under,$(LOCAL_PATH)/rootdir)
+include $(call all-makefiles-under,$(LOCAL_PATH)/liblights)
+include $(call all-makefiles-under,$(LOCAL_PATH)/camera)
 endif
