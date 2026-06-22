@@ -39,20 +39,9 @@ LOCAL_CFLAGS += \
      -D_ANDROID_
 
 LOCAL_C_INCLUDES:= \
-    $(TARGET_OUT_HEADERS)/gps.utils \
-    $(TARGET_OUT_HEADERS)/libloc_core \
     device/samsung/lt03lte/gps/libloc_api_50001
 
-LOCAL_COPY_HEADERS_TO:= libloc_eng/
-LOCAL_COPY_HEADERS:= \
-   LocEngAdapter.h \
-   loc.h \
-   loc_eng.h \
-   loc_eng_xtra.h \
-   loc_eng_ni.h \
-   loc_eng_agps.h \
-   loc_eng_msg.h \
-   loc_eng_log.h
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
 
 LOCAL_PRELINK_MODULE := false
 
@@ -93,8 +82,8 @@ endif
 
 ## Includes
 LOCAL_C_INCLUDES:= \
-    $(TARGET_OUT_HEADERS)/gps.utils \
-    $(TARGET_OUT_HEADERS)/libloc_core
+    device/samsung/lt03lte/gps/utils \
+    device/samsung/lt03lte/gps/core
 
 ifneq ($(QCPATH),)
 ifeq ($(filter $(TARGET_DEVICE), apq8064 msm8960),)
