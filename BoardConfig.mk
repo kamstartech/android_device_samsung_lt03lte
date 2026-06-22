@@ -91,6 +91,7 @@ include device/samsung/msm8974-common/sepolicy/sepolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
 
 # WiFi
+WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_HAVE_SAMSUNG_WIFI     := true
 BOARD_WLAN_DEVICE           := bcmdhd
 BOARD_HOSTAPD_DRIVER        := NL80211
